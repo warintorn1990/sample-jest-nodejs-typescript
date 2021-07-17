@@ -4,7 +4,11 @@ describe("Utils test suite", () => {
   beforeEach(() => {
     console.log("before each");
   });
-  
+
+  beforeAll(() => {
+    console.log("before all");
+  });
+
   test("first test", () => {
     const result = Utils.toUperrCase("abc");
     expect(result).toBe("ABC");
@@ -28,5 +32,27 @@ describe("Utils test suite", () => {
     };
     expect(parsedUrl.query).toEqual(expectedQuery);
     expect(expectedQuery).toEqual(expectedQuery);
+  });
+
+  test.only("test invalid URL", () => {
+    function expectError() {
+      Utils.parseUrl("");
+    }
+    expect(expectError).toThrowError();
+  });
+
+  test.only("test invalid URL With Arrow Function", () => {
+    expect(()=> {
+        Utils.parseUrl("");
+    }).toThrowError();
+  });
+
+  test.only("test invalid URL With Try Catch", () => {
+    try {
+        Utils.parseUrl('');
+    } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+        expect(error).toHaveProperty('message', 'Empty url!');
+    }
   });
 });
